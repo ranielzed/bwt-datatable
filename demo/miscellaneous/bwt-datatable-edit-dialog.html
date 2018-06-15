@@ -2,16 +2,16 @@
 <html>
 	<head>
 		<title></title>
-		<script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+		<script src="../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
 		<script>
 			window.Polymer = window.Polymer || {};
 			window.Polymer.dom = 'shadow';
 		</script>
-		<link rel="import" href="../../../polymer/polymer.html">
-		<link rel="import" href="../../../paper-input/paper-input.html">
-		<link rel="import" href="../../../paper-input/paper-textarea.html">
-		<link rel="import" href="../../../iron-input/iron-input.html">
-		<link rel="import" href="../../bwt-datatable-edit-dialog.html">
+		<script type="module" src="../../../@polymer/polymer/polymer-legacy.js"></script>
+		<script type="module" src="../../../@polymer/paper-input/paper-input.js"></script>
+		<script type="module" src="../../../@polymer/paper-input/paper-textarea.js"></script>
+		<script type="module" src="../../../@polymer/iron-input/iron-input.js"></script>
+		<script type="module" src="../../bwt-datatable-edit-dialog.js"></script>
 	</head>
 	<body>
 		<template is="dom-bind" id="app">
@@ -23,10 +23,14 @@
 			<button on-tap="focus">Focus</button>
 		</template>
 		<script>
-			var app = document.querySelector('#app');
-			app.focus = function(){
-				app.$.dialog.findFocus();
-			}
-		</script>
-	</body>
-</html>
+		<script type="module">
+import '../../../@polymer/polymer/polymer-legacy.js';
+import '../../../@polymer/paper-input/paper-input.js';
+import '../../../@polymer/paper-input/paper-textarea.js';
+import '../../../@polymer/iron-input/iron-input.js';
+import '../../bwt-datatable-edit-dialog.js';
+var app = document.querySelector('#app');
+app.focus = function(){
+    app.$.dialog.findFocus();
+}
+</script>/html>

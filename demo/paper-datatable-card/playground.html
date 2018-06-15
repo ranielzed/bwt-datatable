@@ -2,11 +2,11 @@
 <html>
 	<head>
 		<title>`paper-datatable-card` playground</title>
-		<script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
-		<link rel="import" href="../../../polymer/polymer.html">
-		<link rel="import" href="../../bwt-datatable-card.html">
-		<link rel="import" href="../../bwt-datatable.html">
-		<link rel="import" href="../../docs/documentation-menu.html">
+		<script src="../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+		<script type="module" src="../../../@polymer/polymer/polymer-legacy.js"></script>
+		<script type="module" src="../../bwt-datatable-card.js"></script>
+		<script type="module" src="../../bwt-datatable.js"></script>
+		<script type="module" src="../../docs/documentation-menu.js"></script>
 
 	</head>
 	<body>
@@ -59,79 +59,84 @@
 
 			var myData = [];
 			for (var i=0; i<142; i++) {
-				var id = i*10000+Math.round(Math.random() * 500);
-				var rating = Math.round(Math.random() * 2000)+1000;
-				myData.push({
-					i: i,
-					title: "title"+id,
-					rating: rating,
-					author: {
+		<script type="module">
+import '../../../@polymer/polymer/polymer-legacy.js';
+import '../../bwt-datatable-card.js';
+import '../../bwt-datatable.js';
+import '../../docs/documentation-menu.js';
+var app = document.querySelector('#app');
+
+var myData = [];
+for (var i=0; i<142; i++) {
+    var id = i*10000+Math.round(Math.random() * 500);
+    var rating = Math.round(Math.random() * 2000)+1000;
+    myData.push({
+        i: i,
+        title: "title"+id,
+        rating: rating,
+        author: {
 						first: "David",
 						last: "Mulder "+ i
-					},
-					reserved: (Math.random() > 0.9 ? true : undefined)
-				});
-			}
-			window.myData = myData;
+        },
+        reserved: (Math.random() > 0.9 ? true : undefined)
+    });
+}
+window.myData = myData;
 
-			app.data = {
-				get: function(sort, page, pageSize){
-					console.log('just once? :/');
-					return new Promise(function(resolve, reject){
+app.data = {
+    get: function(sort, page, pageSize){
+        console.log('just once? :/');
+        return new Promise(function(resolve, reject){
 						myData.sort(function(a,b){
-							if(sort.direction == "desc"){
-								var c = a;
-								a = b;
-								b = c;
-							}
-							if(a[sort.property] > b[sort.property]) return 1;
-							if(a[sort.property] < b[sort.property]) return -1;
-							return 0;
+                if(sort.direction == "desc"){
+                    var c = a;
+                    a = b;
+                    b = c;
+                }
+                if(a[sort.property] > b[sort.property]) return 1;
+                if(a[sort.property] < b[sort.property]) return -1;
+                return 0;
 						});
 						resolve(myData.slice((page-1)*pageSize, page*pageSize));
-					});
-				},
-				set: function(item, property, value){
-					return new Promise(function(resolve, reject){
+        });
+    },
+    set: function(item, property, value){
+        return new Promise(function(resolve, reject){
 						console.info("a save was triggered", [item, property, value]);
 						if(item.id === '__new__'){
-							//validate item, if invalid (and thus not savable yet) reject, otherwise return it's new id
-							console.warn('this is for the time being deprecated');
-							/*
-							if(item.author.first.length > 0 && item.author.last.length > 0){
-								console.log('trigger save');
-								var id = Math.round(Math.random() * 10000);
+                //validate item, if invalid (and thus not savable yet) reject, otherwise return it's new id
+                console.warn('this is for the time being deprecated');
+                /*
+                if(item.author.first.length > 0 && item.author.last.length > 0){
+                    console.log('trigger save');
+                    var id = Math.round(Math.random() * 10000);
 
-								item.id = id;
-								myData.push(item);
-								app.set('data.length', myData.length);
-								resolve(id);
-							}else{
-								console.log('no luck yet');
-								reject();
-							}*/
+                    item.id = id;
+                    myData.push(item);
+                    app.set('data.length', myData.length);
+                    resolve(id);
+                }else{
+                    console.log('no luck yet');
+                    reject();
+                }*/
 						}else{
-							var myItem = myData.find(function(thisItem){
-								return thisItem.id == item.id;
-							});
-							myItem[property] = value;
-							resolve(true);
+                var myItem = myData.find(function(thisItem){
+                    return thisItem.id == item.id;
+                });
+                myItem[property] = value;
+                resolve(true);
 						}
-					});
+        });
 
-				},
-				length:myData.length
-			};
+    },
+    length:myData.length
+};
 
-			app.addNew = function(){
-				this.$.datatableCard.addNew();
-			};
+app.addNew = function(){
+    this.$.datatableCard.addNew();
+};
 
-			app.outputSelectedIds = function(){
-				return app.selectedIds.join(', ');
-			}
-
-		</script>
-
-	</body>
-</html>
+app.outputSelectedIds = function(){
+    return app.selectedIds.join(', ');
+}
+</script>

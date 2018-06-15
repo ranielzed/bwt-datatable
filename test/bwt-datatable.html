@@ -15,10 +15,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-  <script src="../../web-component-tester/browser.js"></script>
-  <link rel="import" href="../bwt-datatable.html">
-
-  <style>
+  <script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>cript src="../../wct-browser-legacy/browser.js"></script>  <style>
     
   </style>
 
@@ -54,53 +51,58 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				{id: 0, title: 'Frozen yogurt', calories: 159, fat: 6, carbs: 24, protein: 4, sodium: 87, calcium:.14, iron: .01},
 				{id: 1, title: 'Ice cream sandwich', calories: 237, fat: 9, carbs: 37, protein: 4.3, sodium: 129, calcium:.08, iron: .01},
 				{id: 2, title: 'Eclair', calories: 262, fat: 16, carbs: 24, protein: 6, sodium: 337, calcium:.06, iron: .07},
-				{id: 3, title: 'Cupcake', calories: 305, fat: 3.7, carbs: 67, protein: 4.3, sodium: 413, calcium:.03, iron: .08},
-				{id: 4, title: 'Gingerbread', calories: 356, fat: 16, carbs: 49, protein: 3.9, sodium: 327, calcium:.07, iron: .16},
-				{id: 5, title: 'Jelly bean', calories: 373, fat: 0, carbs: 94, protein: 0, sodium: 50, calcium:0, iron: 0}
-			];
-			app.toFixedOne = function(value){
-				return value.toFixed(1);
-			};
-			app.toPercentage = function(value){
-				return Math.round(value * 10000)/100 + '%';
-			};
-      app.carbsHeader = 'Carbs';
+		<script type="module">
+import '../bwt-datatable.js';
+import { dom } from '../../@polymer/polymer/lib/legacy/polymer.dom.js';
+var app = document.querySelector('#app');
+app.data = [
+    {id: 0, title: 'Frozen yogurt', calories: 159, fat: 6, carbs: 24, protein: 4, sodium: 87, calcium:.14, iron: .01},
+    {id: 1, title: 'Ice cream sandwich', calories: 237, fat: 9, carbs: 37, protein: 4.3, sodium: 129, calcium:.08, iron: .01},
+    {id: 2, title: 'Eclair', calories: 262, fat: 16, carbs: 24, protein: 6, sodium: 337, calcium:.06, iron: .07},
+    {id: 3, title: 'Cupcake', calories: 305, fat: 3.7, carbs: 67, protein: 4.3, sodium: 413, calcium:.03, iron: .08},
+    {id: 4, title: 'Gingerbread', calories: 356, fat: 16, carbs: 49, protein: 3.9, sodium: 327, calcium:.07, iron: .16},
+    {id: 5, title: 'Jelly bean', calories: 373, fat: 0, carbs: 94, protein: 0, sodium: 50, calcium:0, iron: 0}
+];
+app.toFixedOne = function(value){
+    return value.toFixed(1);
+};
+app.toPercentage = function(value){
+    return Math.round(value * 10000)/100 + '%';
+};
+app.carbsHeader = 'Carbs';
 
-      suite('<bwt-datatable>', function() {
-				test('select two rows', function(done){
-          var datatable = app.$.datatable;
-					datatable.select(app.data[0]);
-					datatable.select(app.data[2]);
-          assert.strictEqual(datatable.selectedItems.length, 2);
-					assert.isTrue(datatable.selectedKeys[0] == '#0');
-					assert.isTrue(datatable.selectedKeys[1] == '#2');
-					done();
-				});
-				test('deselect all', function(done){
-					var datatable = app.$.datatable;
-					datatable.deselectAll();
-          assert.strictEqual(datatable.selectedItems.length, 0);
-					assert.isTrue(datatable.selectedKeys.length === 0);
-					done();
-				});
-				test('toggle all(select all rows in table)', function(done){
-					var datatable = app.$.datatable;
-					datatable.toggleAll();
-					assert.isTrue(datatable.selectedKeys.length === 6);
-					datatable.toggleAll();
-					assert.isTrue(datatable.selectedKeys.length === 0);
-					done();
-				});
-        test('binding to column header', function(done) {
-          var datatable = app.$.datatable;
-          var columns = Polymer.dom(document).querySelectorAll('bwt-datatable-column');
-          assert.strictEqual(columns[3].header, app.carbsHeader);
-          app.carbsHeader = 'Organic';
-          assert.strictEqual(columns[3].header, app.carbsHeader);
-          done();
-        });
-      });
-  </script>
-
-</body>
-</html>
+suite('<bwt-datatable>', function() {
+          test('select two rows', function(done){
+    var datatable = app.$.datatable;
+              datatable.select(app.data[0]);
+              datatable.select(app.data[2]);
+    assert.strictEqual(datatable.selectedItems.length, 2);
+              assert.isTrue(datatable.selectedKeys[0] == '#0');
+              assert.isTrue(datatable.selectedKeys[1] == '#2');
+              done();
+          });
+          test('deselect all', function(done){
+              var datatable = app.$.datatable;
+              datatable.deselectAll();
+    assert.strictEqual(datatable.selectedItems.length, 0);
+              assert.isTrue(datatable.selectedKeys.length === 0);
+              done();
+          });
+          test('toggle all(select all rows in table)', function(done){
+              var datatable = app.$.datatable;
+              datatable.toggleAll();
+              assert.isTrue(datatable.selectedKeys.length === 6);
+              datatable.toggleAll();
+              assert.isTrue(datatable.selectedKeys.length === 0);
+              done();
+          });
+  test('binding to column header', function(done) {
+    var datatable = app.$.datatable;
+    var columns = dom(document).querySelectorAll('bwt-datatable-column');
+    assert.strictEqual(columns[3].header, app.carbsHeader);
+    app.carbsHeader = 'Organic';
+    assert.strictEqual(columns[3].header, app.carbsHeader);
+    done();
+  });
+});
+</script>

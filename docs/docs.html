@@ -5,14 +5,14 @@
 		<title>Documentation</title>
 
 		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-		<link rel="import" href="../../polymer/polymer.html">
-		<link rel="import" href="../../paper-card/paper-card.html">
-		<link rel="import" href="../../marked-element/marked-element.html">
-		<link rel="import" href="../../prism-element/prism-highlighter.html">
-		<link rel="import" href="../bwt-datatable-card.html">
-		<link rel="import" href="../bwt-datatable.html">
-		<link rel="import" href="documentation-menu.html">
-		<link rel="import" href="../bwt-datatable-styles.html">
+		<script type="module" src="../../@polymer/polymer/polymer-legacy.js"></script>
+		<script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>></script>
+		<script type="module" src="../../@polymer/marked-element/marked-element.js"></script>
+		<script type="module" src="../../@polymer/prism-element/prism-highlighter.js"></script>
+		<script type="module" src="../bwt-datatable-card.js"></script>
+		<script type="module" src="../bwt-datatable.js"></script>
+		<script type="module" src="./documentation-menu.js"></script>
+		<script type="module" src="../bwt-datatable-styles.js"></script>
 
 
 	</head>
@@ -125,43 +125,61 @@
 							return;
 						}
 						var prevSectionLines = all[i-1].split("\n");
-						prevSectionLines.pop();
-						var lastLineOfPrevSection = prevSectionLines.pop();
-						var currentSectionLines = section.split("\n");
-						if(i < all.length-1){
-							currentSectionLines.pop();
-							currentSectionLines.pop();
-						}
-						return {
-							title: lastLineOfPrevSection.replace(/[`]/g,''),
-							body: currentSectionLines.join("\n"),
-							anchor: lastLineOfPrevSection.replace(/[\<\>\n\r]/g,'').replace(/ /g,'-').toLowerCase()
-						};
-					}).filter((section) => typeof section !== 'undefined');
+	<script type="module">
+import '../../@polymer/polymer/polymer-legacy.js';
+import '../../@polymer/paper-card/paper-card.js';
+import '../../@polymer/marked-element/marked-element.js';
+import '../../@polymer/prism-element/prism-highlighter.js';
+import '../bwt-datatable-card.js';
+import '../bwt-datatable.js';
+import './documentation-menu.js';
+import '../bwt-datatable-styles.js';
+
+var app = document.querySelector('#app');
+
+var httpRequest = new XMLHttpRequest();
+httpRequest.onreadystatechange = function(){
+    if(httpRequest.readyState === XMLHttpRequest.DONE){
+				if(httpRequest.status === 200){
+            var response = httpRequest.responseText;
+            app.sections = response.split("===").map(function(section, i, all){
+                if(i==0){
+                    return;
+                }
+                var prevSectionLines = all[i-1].split("\n");
+                prevSectionLines.pop();
+                var lastLineOfPrevSection = prevSectionLines.pop();
+                var currentSectionLines = section.split("\n");
+                if(i < all.length-1){
+                    currentSectionLines.pop();
+                    currentSectionLines.pop();
+                }
+                return {
+                    title: lastLineOfPrevSection.replace(/[`]/g,''),
+                    body: currentSectionLines.join("\n"),
+                    anchor: lastLineOfPrevSection.replace(/[\<\>\n\r]/g,'').replace(/ /g,'-').toLowerCase()
+                };
+            }).filter((section) => typeof section !== 'undefined');
 				}
-			}
-		};
-		var page = location.search.replace('?', '');
-		var hashToTitle = function(hash){
-			var normalWords = ['with'];
-			return hash.split('-').map((word) => normalWords.indexOf(word) == -1 ? word.substr(0,1).toUpperCase() + word.substr(1, word.length -1) : word).join(' ');
-		}
-		document.title = hashToTitle(page);
-		httpRequest.open('GET', page+'.md');
-		httpRequest.send();
+    }
+};
+var page = location.search.replace('?', '');
+var hashToTitle = function(hash){
+    var normalWords = ['with'];
+    return hash.split('-').map((word) => normalWords.indexOf(word) == -1 ? word.substr(0,1).toUpperCase() + word.substr(1, word.length -1) : word).join(' ');
+}
+document.title = hashToTitle(page);
+httpRequest.open('GET', page+'.md');
+httpRequest.send();
 
 
-		app._figureOutHash = function(){
-			setTimeout(function(){
+app._figureOutHash = function(){
+    setTimeout(function(){
 				var hash = location.hash.replace('#', '');
 				if(hash.length > 0){
-					var target = document.getElementById(hash);
-					target.scrollIntoView(true);
+            var target = document.getElementById(hash);
+            target.scrollIntoView(true);
 				}
-			},0);
-		};
-
-	</script>
-
-	</body>
-</html>
+    },0);
+};
+</script>

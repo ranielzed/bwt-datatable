@@ -2,20 +2,20 @@
 <html>
 	<head>
 		<title>Full `paper-datatable-card` implementation</title>
-		<script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+		<script src="../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
 		<script>
 			window.Polymer = window.Polymer || {};
 			window.Polymer.dom = 'shadow';
 		</script>
-		<link rel="import" href="../../../polymer/polymer.html">
-		<link rel="import" href="../../bwt-datatable-card.html">
-		<link rel="import" href="../../bwt-datatable.html">
-		<link rel="import" href="../../docs/documentation-menu.html">
-		<link rel="import" href="../../../google-map/google-map.html">
-		<link rel="import" href="../../../paper-input/paper-textarea.html">
-		<link rel="import" href="../../../paper-dialog/paper-dialog.html">
-		<link rel="import" href="../../../paper-button/paper-button.html">
-		<link rel="import" href="../../../paper-dialog-scrollable/paper-dialog-scrollable.html">
+		<script type="module" src="../../../@polymer/polymer/polymer-legacy.js"></script>
+		<script type="module" src="../../bwt-datatable-card.js"></script>
+		<script type="module" src="../../bwt-datatable.js"></script>
+		<script type="module" src="../../docs/documentation-menu.js"></script>
+		<script type="module" src="../../../google-map/google-map.js"></script>
+		<script type="module" src="../../../@polymer/paper-input/paper-textarea.js"></script>
+		<script type="module" src="../../../@polymer/paper-dialog/paper-dialog.js"></script>
+		<script type="module" src="../../../@polymer/paper-button/paper-button.js"></script>
+		<script type="module" src="../../../@polymer/paper-dialog-scrollable/paper-dialog-scrollable.js"></script>
 		<script src="../../../whenever.js/whenever.js"></script>
 		<script src="../data/fakeDB.js"></script>
 		<script src="../data/userData.js"></script>
@@ -113,82 +113,91 @@
 			var app = document.querySelector('#app');
 			
 			app.data = {
-				queryForIds: function(sort, page, pageSize){
-					db.count(app.searchTerm, sort, (page-1)*pageSize, page*pageSize).then(function(count){
+		<script type="module">
+import '../../../@polymer/polymer/polymer-legacy.js';
+import '../../bwt-datatable-card.js';
+import '../../bwt-datatable.js';
+import '../../docs/documentation-menu.js';
+import '../../../google-map/google-map.js';
+import '../../../@polymer/paper-input/paper-textarea.js';
+import '../../../@polymer/paper-dialog/paper-dialog.js';
+import '../../../@polymer/paper-button/paper-button.js';
+import '../../../@polymer/paper-dialog-scrollable/paper-dialog-scrollable.js';
+var app = document.querySelector('#app');
+
+app.data = {
+    queryForIds: function(sort, page, pageSize){
+        db.count(app.searchTerm, sort, (page-1)*pageSize, page*pageSize).then(function(count){
 						app.set('data.length', count);
-					});
-					return db.select('id', app.searchTerm, sort, (page-1)*pageSize, page*pageSize);
-				},
-				getByIds: function(ids){
-					return db.select('*', ids);
-				},
-				set: function(item, property, value){
-					return db.update(item.id, property, value);
-				},
-				length:0
-			};
+        });
+        return db.select('id', app.searchTerm, sort, (page-1)*pageSize, page*pageSize);
+    },
+    getByIds: function(ids){
+        return db.select('*', ids);
+    },
+    set: function(item, property, value){
+        return db.update(item.id, property, value);
+    },
+    length:0
+};
 
-			app.clip = function(value){
-				var substr = value.substr(0, 40);
-				if(substr.length < 40){
-					return substr;
-				}else{
-					return substr + '...';
-				}
-			};
+app.clip = function(value){
+    var substr = value.substr(0, 40);
+    if(substr.length < 40){
+        return substr;
+    }else{
+        return substr + '...';
+    }
+};
 
-			app.formatLatLng = function(value){
-				var lat = (value.lat > 0 ? '&nbsp;': '') + (value.lat < 10 && value.lat > -10 ? '&nbsp;': '') + value.lat.toFixed(6);
-				var lng = (value.lng > 0 ? '&nbsp;': '') + (value.lng < 10 && value.lng > -10 ? '&nbsp;': '') + (value.lng < 100 && value.lng > -100 ? '&nbsp;': '') + value.lng.toFixed(6);
-				return lat + ' | ' + lng;
-			};
+app.formatLatLng = function(value){
+    var lat = (value.lat > 0 ? '&nbsp;': '') + (value.lat < 10 && value.lat > -10 ? '&nbsp;': '') + value.lat.toFixed(6);
+    var lng = (value.lng > 0 ? '&nbsp;': '') + (value.lng < 10 && value.lng > -10 ? '&nbsp;': '') + (value.lng < 100 && value.lng > -100 ? '&nbsp;': '') + value.lng.toFixed(6);
+    return lat + ' | ' + lng;
+};
 
-			app.deleteSelected = function(){
-				var users = JSON.parse(localStorage.getItem('users'));
-				app.selectedIds.forEach((id) => {
-					// var index = users.findIndex((item) => id == item.id);
-					// users.splice(index, 1);
-				});
-				// this.saveToLocalStorage(users);
-				this.$.datatableCard.deselectAll();
-				this.$.datatableCard.retrieveVisibleData();
-			};
+app.deleteSelected = function(){
+    var users = JSON.parse(localStorage.getItem('users'));
+    app.selectedIds.forEach((id) => {
+        // var index = users.findIndex((item) => id == item.id);
+        // users.splice(index, 1);
+    });
+    // this.saveToLocalStorage(users);
+    this.$.datatableCard.deselectAll();
+    this.$.datatableCard.retrieveVisibleData();
+};
 
-			app.saveToLocalStorage = function(users){
-				// localStorage.users = JSON.stringify(users);
-			};
+app.saveToLocalStorage = function(users){
+    // localStorage.users = JSON.stringify(users);
+};
 
-			app.editDialogForSelected = function(){
-				this.$.editDialog.opened = true;
-			};
+app.editDialogForSelected = function(){
+    this.$.editDialog.opened = true;
+};
 
-			app.onlyFirst = function(item, index){
-				// if(typeof index === 'undefined'){
-				// 	alert('Please see issue #34');
-				// }
-				// if(index == 0){
-				// 	return true;  
-				// }          
-			};                                    
+app.onlyFirst = function(item, index){
+    // if(typeof index === 'undefined'){
+    // 	alert('Please see issue #34');
+    // }
+    // if(index == 0){
+    // 	return true;  
+    // }          
+};
 
- 			app.rowTapped = function(ev){
-				if(app.isDebouncerActive('dblclick'+ev.detail.item.id)){
-					//double click
-					app.$.datatableCard.deselectAll();
-					app.$.datatableCard.select(ev.detail.item.id);
-					app.editDialogForSelected();
-					ev.preventDefault();
-					app.cancelDebouncer('dblclick');
-				}else{
-					app.debounce('dblclick'+ev.detail.item.id, function(){}, 300);
-				}
-			};
+app.rowTapped = function(ev){
+    if(app.isDebouncerActive('dblclick'+ev.detail.item.id)){
+        //double click
+        app.$.datatableCard.deselectAll();
+        app.$.datatableCard.select(ev.detail.item.id);
+        app.editDialogForSelected();
+        ev.preventDefault();
+        app.cancelDebouncer('dblclick');
+    }else{
+        app.debounce('dblclick'+ev.detail.item.id, function(){}, 300);
+    }
+};
 
-			app.retrieveResults = function(ev){
-				app.$.datatableCard.retrieveVisibleData();
-			};
-
-		</script>
-
-	</body>
-</html>
+app.retrieveResults = function(ev){
+    app.$.datatableCard.retrieveVisibleData();
+};
+</script>

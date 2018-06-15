@@ -2,11 +2,11 @@
 <html>
 	<head>
 		<title>Simple `paper-datatable-card`</title>
-		<script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
-		<link rel="import" href="../../../polymer/polymer.html">
-		<link rel="import" href="../../bwt-datatable-card.html">
-		<link rel="import" href="../../bwt-datatable.html">
-		<link rel="import" href="../../docs/documentation-menu.html">
+		<script src="../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+		<script type="module" src="../../../@polymer/polymer/polymer-legacy.js"></script>
+		<script type="module" src="../../bwt-datatable-card.js"></script>
+		<script type="module" src="../../bwt-datatable.js"></script>
+		<script type="module" src="../../docs/documentation-menu.js"></script>
 	</head>
 	<body>
 
@@ -68,55 +68,61 @@
 
 			app.dataSource = {
 				get: function(sort, page, pageSize){
-					return new Promise(function(resolve, reject){
+		<script type="module">
+import '../../../@polymer/polymer/polymer-legacy.js';
+import '../../bwt-datatable-card.js';
+import '../../bwt-datatable.js';
+import '../../docs/documentation-menu.js';
+var app = document.querySelector('#app');
+
+
+app.dataSource = {
+    get: function(sort, page, pageSize){
+        return new Promise(function(resolve, reject){
 						var httpRequest = new XMLHttpRequest();
 						httpRequest.onreadystatechange = function() {
-							if (httpRequest.readyState === XMLHttpRequest.DONE) {
-								if (httpRequest.status === 200) {
-									var result = JSON.parse(httpRequest.responseText);
-									var count = 0;
-									var users = result.results.map(function(item){
-										item.sha1 = count;
-										count++;
-										return item;
-									});
-									resolve(users);
-								}
-							}
+                if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                    if (httpRequest.status === 200) {
+                        var result = JSON.parse(httpRequest.responseText);
+                        var count = 0;
+                        var users = result.results.map(function(item){
+                            item.sha1 = count;
+                            count++;
+                            return item;
+                        });
+                        resolve(users);
+                    }
+                }
 						};
 						//httpRequest.open('GET', 'http://api.randomuser.me/?nat=US&results='+pageSize);
 						httpRequest.open('GET', '../data/users.json');
 						httpRequest.send();
-					});
-				},
-				// none of the <templates> bind in an editable way right now, but if they would this is the function
-				// that's triggered after an edit
-				set: function(id, property, value){
-					console.info("a save was triggered", arguments);
-				},
-				length:100
-			};
+        });
+    },
+    // none of the <templates> bind in an editable way right now, but if they would this is the function
+    // that's triggered after an edit
+    set: function(id, property, value){
+        console.info("a save was triggered", arguments);
+    },
+    length:100
+};
 
-			app.capitalize = function(str){
-				if (!str) return '';
-				return str.toString().split(' ').map(function(str){
-					return str.substr(0,1).toUpperCase() + str.substr(1, str.length - 1);
-				}).join(' ');
-			};
+app.capitalize = function(str){
+    if (!str) return '';
+    return str.toString().split(' ').map(function(str){
+        return str.substr(0,1).toUpperCase() + str.substr(1, str.length - 1);
+    }).join(' ');
+};
 
-			app.delete = function(){
-				// do your delete first
-				app.set('dataSource.length', app.dataSource.length - 1);
-				// and then call:
-				app.$.datatable.deselectAll();
-				app.$.datatableCard.retrieveVisibleData();
-			};
+app.delete = function(){
+    // do your delete first
+    app.set('dataSource.length', app.dataSource.length - 1);
+    // and then call:
+    app.$.datatable.deselectAll();
+    app.$.datatableCard.retrieveVisibleData();
+};
 
-			app.showInfo = function(){
-				window.alert('You select item #'+this.selectedIds+'!');
-			};
-
-		</script>
-
-	</body>
-</html>
+app.showInfo = function(){
+    window.alert('You select item #'+this.selectedIds+'!');
+};
+</script>

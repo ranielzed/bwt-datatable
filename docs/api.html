@@ -5,11 +5,11 @@
 		<title>API Reference</title>
 
 		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-		<link rel="import" href="../../polymer/polymer.html">
-		<link rel="import" href="../../paper-card/paper-card.html">
-		<link rel="import" href="../bwt-datatable.html">
+		<script type="module" src="../../@polymer/polymer/polymer-legacy.js"></script>
+		<script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>></script>
+		<script type="module" src="../bwt-datatable.js"></script>
 		<link rel="import" href="../documentation-menu.html">
-		<link rel="import" href="../../iron-component-page/iron-component-page.html">
+		<script type="module" src="../../@polymer/iron-component-page/iron-component-page.js"></script>
 
 	</head>
 	<body>
@@ -23,7 +23,13 @@
 			var icp = document.getElementById('ironComponentPage');
 			icp.setAttribute('active', 'bwt-'+element);
 			icp.setAttribute('src', '../bwt-'+element+'.html');
-		</script>
-
-	</body>
-</html>
+		<script type="module">
+import '../../@polymer/polymer/polymer-legacy.js';
+import '../../@polymer/paper-card/paper-card.js';
+import '../bwt-datatable.js';
+import '../../@polymer/iron-component-page/iron-component-page.js';
+var element = location.search.replace('?', '');
+var icp = document.getElementById('ironComponentPage');
+icp.setAttribute('active', 'bwt-'+element);
+icp.setAttribute('src', '../bwt-'+element+'.html');
+</script>

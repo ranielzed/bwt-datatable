@@ -6,14 +6,13 @@
 
 		<script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
 		<script>
-			window.Polymer = window.Polymer || {};
-			window.Polymer.dom = 'shadow';
+		<script src="../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>ow';
 		</script>
-		<link rel="import" href="../../../polymer/polymer.html">
-		<link rel="import" href="../../../paper-card/paper-card.html">
-		<link rel="import" href="../../bwt-datatable-card.html">
-		<link rel="import" href="../../bwt-datatable.html">
-		<link rel="import" href="../../docs/documentation-menu.html">
+		<script type="module" src="../../../@polymer/polymer/polymer-legacy.js"></script>
+		<script type="module" src="../../../@polymer/paper-card/paper-card.js"></script>
+		<script type="module" src="../../bwt-datatable-card.js"></script>
+		<script type="module" src="../../bwt-datatable.js"></script>
+		<script type="module" src="../../docs/documentation-menu.js"></script>
 
 	</head>
 	<body>
@@ -59,35 +58,44 @@
 					name: 'Me',
 					legs: [
 						{ time: 45, rank: 1},
+		<script type="module">
+import '../../../@polymer/polymer/polymer-legacy.js';
+import '../../../@polymer/paper-card/paper-card.js';
+import '../../bwt-datatable-card.js';
+import '../../bwt-datatable.js';
+import '../../docs/documentation-menu.js';
+var app = document.querySelector('#app');
+var data = [
+    {
+        name: 'Me',
+        legs: [
+						{ time: 45, rank: 1},
 						{ time: 30, rank: 2},
 						{ time: 35, rank: 2}
-					]
-				},
-				{
-					name: 'You',
-					legs: [
+        ]
+    },
+    {
+        name: 'You',
+        legs: [
 						{ time: 50, rank: 2},
 						{ time: 20, rank: 1},
 						{ time: 20, rank: 1}
-					]
-				}
-			];
-			var legs = [];
-			data[0].legs.forEach(function(leg, i){
-				data.forEach(function(contestant){
-					contestant['leg-'+(i+1)] = contestant.legs[i];
-				});
-				legs.push(i+1);
-			});
-			app.legs = legs;
-			app.data = data;
-			app.customSortByRank = function(a,b){
-				return a.rank < b.rank;
-			};
-			app.customSortByTime = function(a,b){
-				return a.time < b.time;
-			};
-		</script>
-
-	</body>
-</html>
+        ]
+    }
+];
+var legs = [];
+data[0].legs.forEach(function(leg, i){
+    data.forEach(function(contestant){
+        contestant['leg-'+(i+1)] = contestant.legs[i];
+    });
+    legs.push(i+1);
+});
+app.legs = legs;
+app.data = data;
+app.customSortByRank = function(a,b){
+    return a.rank < b.rank;
+};
+app.customSortByTime = function(a,b){
+    return a.time < b.time;
+};
+</script>

@@ -6,14 +6,13 @@
 
 		<script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
 		<script>
-			window.Polymer = window.Polymer || {};
-			window.Polymer.dom = 'shadow';
+		<script src="../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>ow';
 		</script>
-		<link rel="import" href="../../../polymer/polymer.html">
-		<link rel="import" href="../../../paper-icon-button/paper-icon-button.html">
-		<link rel="import" href="../../datatable-icons.html">
+		<script type="module" src="../../../@polymer/polymer/polymer-legacy.js"></script>
+		<script type="module" src="../../../@polymer/paper-icon-button/paper-icon-button.js"></script>
+		<script type="module" src="../../datatable-icons.js"></script>
 
-		<link rel="import" href="../../docs/documentation-menu.html">
+		<script type="module" src="../../docs/documentation-menu.js"></script>
 
 	</head>
 	<body>
@@ -36,5 +35,10 @@
 
 		</script>
 
-	</body>
-</html>
+	<<script type="module">
+import '../../../@polymer/polymer/polymer-legacy.js';
+import '../../../@polymer/paper-icon-button/paper-icon-button.js';
+import '../../datatable-icons.js';
+import '../../docs/documentation-menu.js';
+var app = document.querySelector('#app');
+</script>

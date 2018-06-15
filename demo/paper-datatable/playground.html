@@ -6,15 +6,13 @@
 
 		<script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
 		<script src="../libs/relativeDate.js"></script>
-		<script>
-			window.Polymer = window.Polymer || {};
-			window.Polymer.dom = 'shadow';
+		<script src="../../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>.dom = 'shadow';
 		</script>
-		<link rel="import" href="../../../polymer/polymer.html">
-		<link rel="import" href="../../../paper-card/paper-card.html">
-		<link rel="import" href="../../bwt-datatable-card.html">
-		<link rel="import" href="../../bwt-datatable.html">
-		<link rel="import" href="../../docs/documentation-menu.html">
+		<script type="module" src="../../../@polymer/polymer/polymer-legacy.js"></script>
+		<script type="module" src="../../../@polymer/paper-card/paper-card.js"></script>
+		<script type="module" src="../../bwt-datatable-card.js"></script>
+		<script type="module" src="../../bwt-datatable.js"></script>
+		<script type="module" src="../../docs/documentation-menu.js"></script>
 
 	</head>
 	<body>
@@ -105,19 +103,29 @@
 			};
 			app.data = [
 				{title: 'Ice cream', yummy: true, calories: 2000, complexObj: {a: 'b', b: 'd'}, arr: [2,3,4], complexArr: [{title:'b'}, {title:'c'}], created: new Date(1447315235838)},
-				{title: 'Dessert', yummy: true, calories: 3000, complexObj: {a: 'bb', b: 'dd'}, arr: [5,6], complexArr: [{title:'b'}, {title:'c'}], created: new Date(1447155235838)},
-				{title: 'Cake', yummy: false, calories: 4000, complexObj: {a: 'cc', b: 'gg'}, arr: [7,8], complexArr: [{title:'b'}, {title:'c'}], created: new Date(1447355135838)}
-			];
-			app.log = function(ev){
-				console.info('event', ev.type, 'on', ev.target, 'with detail', ev.detail);
-			};
-			app.deselectAll = function(){
-				app.$.lastDataTable.deselectAll();
-			};
+		<script type="module">
+import '../../../@polymer/polymer/polymer-legacy.js';
+import '../../../@polymer/paper-card/paper-card.js';
+import '../../bwt-datatable-card.js';
+import '../../bwt-datatable.js';
+import '../../docs/documentation-menu.js';
+var app = document.querySelector('#app');
+//this function is necessary, because since Polymer 1.2 paths with indexes aren't allowed in direct bindings
+app.getItem = function(watcher, path){
+    return this.get(path);
+};
+app.data = [
+    {title: 'Ice cream', yummy: true, calories: 2000, complexObj: {a: 'b', b: 'd'}, arr: [2,3,4], complexArr: [{title:'b'}, {title:'c'}], created: new Date(1447315235838)},
+    {title: 'Dessert', yummy: true, calories: 3000, complexObj: {a: 'bb', b: 'dd'}, arr: [5,6], complexArr: [{title:'b'}, {title:'c'}], created: new Date(1447155235838)},
+    {title: 'Cake', yummy: false, calories: 4000, complexObj: {a: 'cc', b: 'gg'}, arr: [7,8], complexArr: [{title:'b'}, {title:'c'}], created: new Date(1447355135838)}
+];
+app.log = function(ev){
+    console.info('event', ev.type, 'on', ev.target, 'with detail', ev.detail);
+};
+app.deselectAll = function(){
+    app.$.lastDataTable.deselectAll();
+};
 
-			/* relativeDate is defined in relativeDate.js */
-			app.formatDate = relativeDate;
-		</script>
-
-	</body>
-</html>
+/* relativeDate is defined in relativeDate.js */
+app.formatDate = relativeDate;
+</script>
