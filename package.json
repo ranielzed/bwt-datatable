@@ -9,12 +9,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/bluewatertracks/zed-datatable"
+    "url": "https://github.com/ranielzed/zed-datatable"
   },
-  "homepage": "https://github.com/bluewatertracks/zed-datatable",
+  "homepage": "https://github.com/ranielzed/zed-datatable",
   "name": "zed-datatable",
   "version": "2.2.0",
-  "author": "Blue Water Tracks",
+  "author": "Raniel Zed",
   "license": "AGPL-3.0-only",
   "files": [],
   "main": "zed-datatable.js",
