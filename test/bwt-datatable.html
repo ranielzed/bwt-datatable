@@ -11,7 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>bwt-datatable tests</title>
+  <title>zed-datatable tests</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
@@ -23,8 +23,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body>
   <template is="dom-bind" id="app">
 				<style is="custom-style">
-					bwt-card {
-						--bwt-card-header-text: {
+					zed-card {
+						--zed-card-header-text: {
 							font-family: 'Roboto', 'Noto', sans-serif;
 							font-weight: normal;
 							font-size: 20px;
@@ -32,16 +32,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					}
 				</style>
 
-				<bwt-datatable id="datatable" data="{{data}}" selectable multi-selection>
-					<bwt-datatable-column header="Dessert (100g serving)" property="title" type="String" style="width:99%;" sortable></bwt-datatable-column>
-					<bwt-datatable-column header="Calories" property="calories" type="Number" align="right" sortable tooltip="The total amount of food energy in the given serving size."></bwt-datatable-column>
-					<bwt-datatable-column header="Fat (g)" property="fat" type="Number" align="right" format-value="[[toFixedOne]]" sortable tooltip="The total amount of fat in the given serving size."></bwt-datatable-column>
-					<bwt-datatable-column header="[[carbsHeader]]" property="carbs" type="Number" align="right" sortable tooltip="The total amount of carbs in the given serving size."></bwt-datatable-column>
-					<bwt-datatable-column header="Protein (g)" property="protein" type="Number" align="right" format-value="[[toFixedOne]]" sortable tooltip="The total amount of protein in the given serving size."></bwt-datatable-column>
-					<bwt-datatable-column header="Sodium (mg)" property="sodium" type="Number" align="right" sortable tooltip="The amount of sodium as a percentage of the recommended daily amount."></bwt-datatable-column>
-					<bwt-datatable-column header="Calcium (%)" property="calcium" type="Number" align="right" format-value="[[toPercentage]]" sortable tooltip="The amount of calcium as a percentage of the recommended daily amount."></bwt-datatable-column>
-					<bwt-datatable-column header="Iron (%)" property="iron" type="Number" align="right" format-value="[[toPercentage]]" sortable tooltip="The amount of iron as a percentage of the recommended daily amount."></bwt-datatable-column>
-				</bwt-datatable>
+				<zed-datatable id="datatable" data="{{data}}" selectable multi-selection>
+					<zed-datatable-column header="Dessert (100g serving)" property="title" type="String" style="width:99%;" sortable></zed-datatable-column>
+					<zed-datatable-column header="Calories" property="calories" type="Number" align="right" sortable tooltip="The total amount of food energy in the given serving size."></zed-datatable-column>
+					<zed-datatable-column header="Fat (g)" property="fat" type="Number" align="right" format-value="[[toFixedOne]]" sortable tooltip="The total amount of fat in the given serving size."></zed-datatable-column>
+					<zed-datatable-column header="[[carbsHeader]]" property="carbs" type="Number" align="right" sortable tooltip="The total amount of carbs in the given serving size."></zed-datatable-column>
+					<zed-datatable-column header="Protein (g)" property="protein" type="Number" align="right" format-value="[[toFixedOne]]" sortable tooltip="The total amount of protein in the given serving size."></zed-datatable-column>
+					<zed-datatable-column header="Sodium (mg)" property="sodium" type="Number" align="right" sortable tooltip="The amount of sodium as a percentage of the recommended daily amount."></zed-datatable-column>
+					<zed-datatable-column header="Calcium (%)" property="calcium" type="Number" align="right" format-value="[[toPercentage]]" sortable tooltip="The amount of calcium as a percentage of the recommended daily amount."></zed-datatable-column>
+					<zed-datatable-column header="Iron (%)" property="iron" type="Number" align="right" format-value="[[toPercentage]]" sortable tooltip="The amount of iron as a percentage of the recommended daily amount."></zed-datatable-column>
+				</zed-datatable>
 
 		</template>
 
@@ -52,7 +52,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				{id: 1, title: 'Ice cream sandwich', calories: 237, fat: 9, carbs: 37, protein: 4.3, sodium: 129, calcium:.08, iron: .01},
 				{id: 2, title: 'Eclair', calories: 262, fat: 16, carbs: 24, protein: 6, sodium: 337, calcium:.06, iron: .07},
 		<script type="module">
-import '../bwt-datatable.js';
+import '../zed-datatable.js';
 import { dom } from '../../@polymer/polymer/lib/legacy/polymer.dom.js';
 var app = document.querySelector('#app');
 app.data = [
@@ -71,7 +71,7 @@ app.toPercentage = function(value){
 };
 app.carbsHeader = 'Carbs';
 
-suite('<bwt-datatable>', function() {
+suite('<zed-datatable>', function() {
           test('select two rows', function(done){
     var datatable = app.$.datatable;
               datatable.select(app.data[0]);
@@ -98,7 +98,7 @@ suite('<bwt-datatable>', function() {
           });
   test('binding to column header', function(done) {
     var datatable = app.$.datatable;
-    var columns = dom(document).querySelectorAll('bwt-datatable-column');
+    var columns = dom(document).querySelectorAll('zed-datatable-column');
     assert.strictEqual(columns[3].header, app.carbsHeader);
     app.carbsHeader = 'Organic';
     assert.strictEqual(columns[3].header, app.carbsHeader);

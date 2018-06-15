@@ -1,7 +1,7 @@
 {
   "description": "Material design data table.",
   "keywords": [
-    "bwt-datatable",
+    "zed-datatable",
     "paper-datatable",
     "web-components",
     "polymer",
@@ -9,15 +9,15 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/bluewatertracks/bwt-datatable"
+    "url": "https://github.com/bluewatertracks/zed-datatable"
   },
-  "homepage": "https://github.com/bluewatertracks/bwt-datatable",
-  "name": "bwt-datatable",
+  "homepage": "https://github.com/bluewatertracks/zed-datatable",
+  "name": "zed-datatable",
   "version": "2.2.0",
   "author": "Blue Water Tracks",
   "license": "AGPL-3.0-only",
   "files": [],
-  "main": "bwt-datatable.js",
+  "main": "zed-datatable.js",
   "dependencies": {
     "bower": "^1.8.0",
     "@polymer/polymer": "^3.0.0",
